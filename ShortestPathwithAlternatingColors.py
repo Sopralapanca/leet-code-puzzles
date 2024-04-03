@@ -51,9 +51,18 @@ class Solution(object):
         if 0 in nodes:
             return counter
         
-        node = min(nodes)
+        while len(nodes) > 0: 
+            node = min(nodes)
+            if node not in self.blueDict:
+                nodes.remove(node)
+            else:
+                new_nodes = self.blueDict[node]
+                counter += 1
+                r = searchInRed(self, new_nodes, counter)
+                
+                if r == -1
+                    nodes.remove(node)
 
-        pass
     
     def searchInRed(self, nodes, counter):
         pass
@@ -73,23 +82,23 @@ class Solution(object):
 
         #key: receiver node
         #values: list of all starting nodes
-        redDict = self.buildDict(redEdges)
-        blueDict = self.buildDict(blueEdges)
+        self.redDict = self.buildDict(redEdges)
+        self.blueDict = self.buildDict(blueEdges)
 
         answer = [0]
         for i in range(1, n):
-            if i not in redDict:
-                if i not in blueDict:
+            if i not in self.redDict:
+                if i not in self.blueDict:
                     answer[i] = -1
                     pass
             
-            if i in redDict:
+            if i in self.redDict:
                 # there is a red edge to i
-                sender_nodes = redDict[i]
+                sender_nodes = self.redDict[i]
                 r1 = searchInBlue(sender_nodes, 1)
             
-            if i in blueDict:
-                sender_nodes = blueDict[i]
+            if i in self.blueDict:
+                sender_nodes = self.blueDict[i]
                 r2 = searchInBlue(sender_nodes, 1)
 
             answer[i] = min(r1, r2)
